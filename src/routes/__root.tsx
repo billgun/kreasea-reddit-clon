@@ -17,6 +17,7 @@ import { getSupabaseServerClient } from "../utils/supabase";
 import { Header } from "~/components/Header";
 import { SidebarProvider, SidebarInset } from "~/components/ui/sidebar";
 import { AppSidebar } from "~/components/Sidebar";
+import { ThemeProvider } from "~/components/ThemeProvider";
 
 const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
   const supabase = getSupabaseServerClient();
@@ -105,21 +106,25 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-svh bg-gray-50">
-        <SidebarProvider>
-          <div className="flex min-h-screen w-full flex-col">
-            <Header />
-            <div className="flex flex-1">
-              <AppSidebar />
-              <SidebarInset className="bg-gray-50">
-                <main className="flex-1 overflow-auto">
-                  <div className="mx-auto max-w-5xl px-4 py-4">{children}</div>
-                </main>
-              </SidebarInset>
+        <ThemeProvider>
+          <SidebarProvider>
+            <div className="flex min-h-screen w-full flex-col">
+              <Header />
+              <div className="flex flex-1">
+                <AppSidebar />
+                <SidebarInset className="bg-gray-50">
+                  <main className="flex-1 overflow-auto">
+                    <div className="mx-auto max-w-5xl px-4 py-4">
+                      {children}
+                    </div>
+                  </main>
+                </SidebarInset>
+              </div>
             </div>
-          </div>
-        </SidebarProvider>
-        <TanStackRouterDevtools position="bottom-right" />
-        <Scripts />
+          </SidebarProvider>
+          <TanStackRouterDevtools position="bottom-right" />
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );
