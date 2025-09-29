@@ -13,8 +13,10 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as CommonLayoutRouteImport } from './routes/_commonLayout'
 import { Route as AuthedRouteImport } from './routes/_authed'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as CommonLayoutIndexRouteImport } from './routes/_commonLayout/index'
+import { Route as CommonLayoutTestRouteImport } from './routes/_commonLayout/test'
 import { Route as AuthedPostsRouteImport } from './routes/_authed/posts'
 import { Route as AuthedPostsIndexRouteImport } from './routes/_authed/posts.index'
 import { Route as AuthedPostsPostIdRouteImport } from './routes/_authed/posts.$postId'
@@ -39,14 +41,23 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommonLayoutRoute = CommonLayoutRouteImport.update({
+  id: '/_commonLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const CommonLayoutIndexRoute = CommonLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => CommonLayoutRoute,
+} as any)
+const CommonLayoutTestRoute = CommonLayoutTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => CommonLayoutRoute,
 } as any)
 const AuthedPostsRoute = AuthedPostsRouteImport.update({
   id: '/posts',
@@ -65,72 +76,80 @@ const AuthedPostsPostIdRoute = AuthedPostsPostIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/signup': typeof SignupRoute
   '/posts': typeof AuthedPostsRouteWithChildren
+  '/test': typeof CommonLayoutTestRoute
+  '/': typeof CommonLayoutIndexRoute
   '/posts/$postId': typeof AuthedPostsPostIdRoute
   '/posts/': typeof AuthedPostsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/signup': typeof SignupRoute
+  '/test': typeof CommonLayoutTestRoute
+  '/': typeof CommonLayoutIndexRoute
   '/posts/$postId': typeof AuthedPostsPostIdRoute
   '/posts': typeof AuthedPostsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
+  '/_commonLayout': typeof CommonLayoutRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/signup': typeof SignupRoute
   '/_authed/posts': typeof AuthedPostsRouteWithChildren
+  '/_commonLayout/test': typeof CommonLayoutTestRoute
+  '/_commonLayout/': typeof CommonLayoutIndexRoute
   '/_authed/posts/$postId': typeof AuthedPostsPostIdRoute
   '/_authed/posts/': typeof AuthedPostsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/signup'
     | '/posts'
+    | '/test'
+    | '/'
     | '/posts/$postId'
     | '/posts/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/signup'
+    | '/test'
+    | '/'
     | '/posts/$postId'
     | '/posts'
   id:
     | '__root__'
-    | '/'
     | '/_authed'
+    | '/_commonLayout'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/signup'
     | '/_authed/posts'
+    | '/_commonLayout/test'
+    | '/_commonLayout/'
     | '/_authed/posts/$postId'
     | '/_authed/posts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
+  CommonLayoutRoute: typeof CommonLayoutRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
@@ -167,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_commonLayout': {
+      id: '/_commonLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof CommonLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed': {
       id: '/_authed'
       path: ''
@@ -174,12 +200,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_commonLayout/': {
+      id: '/_commonLayout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof CommonLayoutIndexRouteImport
+      parentRoute: typeof CommonLayoutRoute
+    }
+    '/_commonLayout/test': {
+      id: '/_commonLayout/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof CommonLayoutTestRouteImport
+      parentRoute: typeof CommonLayoutRoute
     }
     '/_authed/posts': {
       id: '/_authed/posts'
@@ -230,9 +263,23 @@ const AuthedRouteChildren: AuthedRouteChildren = {
 const AuthedRouteWithChildren =
   AuthedRoute._addFileChildren(AuthedRouteChildren)
 
+interface CommonLayoutRouteChildren {
+  CommonLayoutTestRoute: typeof CommonLayoutTestRoute
+  CommonLayoutIndexRoute: typeof CommonLayoutIndexRoute
+}
+
+const CommonLayoutRouteChildren: CommonLayoutRouteChildren = {
+  CommonLayoutTestRoute: CommonLayoutTestRoute,
+  CommonLayoutIndexRoute: CommonLayoutIndexRoute,
+}
+
+const CommonLayoutRouteWithChildren = CommonLayoutRoute._addFileChildren(
+  CommonLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
+  CommonLayoutRoute: CommonLayoutRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
