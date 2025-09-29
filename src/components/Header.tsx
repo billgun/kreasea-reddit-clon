@@ -5,6 +5,7 @@ import { Route } from "~/routes/__root";
 import { SidebarTrigger } from "~/components/ui/sidebar";
 import { Search, Plus, Bell, MessageSquare, User } from "lucide-react";
 import { DarkModeToggle } from "./DarkModeToggle";
+import { LoginDialog } from "./LoginDialog";
 
 export function Header() {
   const { user } = Route.useRouteContext();
@@ -63,12 +64,7 @@ export function Header() {
             </>
           ) : (
             <>
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/login">Log In</Link>
-              </Button>
-              <Button variant="default" size="sm" asChild>
-                <Link to="/signup">Sign Up</Link>
-              </Button>
+              <LoginDialog />
             </>
           )}
         </div>
