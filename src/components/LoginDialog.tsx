@@ -13,7 +13,7 @@ import {
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
 import { useMutation } from "~/hooks/useMutation";
-import { loginFn } from "~/routes/_authed";
+import { loginFn } from "~/routes/_commonLayout/_authed";
 import { signupFn } from "~/routes/signup";
 import { z } from "zod";
 import { FloatingLabel, FloatingLabelInput } from "./ui/floating-label-input";

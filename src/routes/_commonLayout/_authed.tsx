@@ -20,7 +20,7 @@ export const loginFn = createServerFn({ method: "POST" })
     }
   });
 
-export const Route = createFileRoute("/_authed")({
+export const Route = createFileRoute("/_commonLayout/_authed")({
   beforeLoad: ({ context }) => {
     if (!context.user) {
       throw new Error("Not authenticated");
