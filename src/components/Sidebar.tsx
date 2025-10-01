@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -20,6 +21,7 @@ import {
   Plus,
   Crown,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export function AppSidebar() {
   return (
@@ -40,30 +42,36 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               <SidebarMenuItem>
-                <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
-                  <Home className="h-5 w-5 text-muted-foreground" />
-                  <span className="font-medium">Home</span>
-                </SidebarMenuButton>
+                <Link to="/">
+                  <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
+                    <Home className="h-5 w-5 text-muted-foreground" />
+                    <span className="font-medium">Home</span>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
-                  <TrendingUp className="h-5 w-5 text-muted-foreground" />
-                  <span className="font-medium">Popular</span>
-                </SidebarMenuButton>
+                <Link to="/popular">
+                  <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
+                    <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                    <span className="font-medium">Popular</span>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
-                  <Users className="h-5 w-5 text-muted-foreground" />
-                  <span className="font-medium">All</span>
-                </SidebarMenuButton>
+                <Link to="/explore">
+                  <SidebarMenuButton className="h-10 justify-start gap-3 px-3 hover:bg-accent hover:text-accent-foreground">
+                    <Users className="h-5 w-5 text-muted-foreground" />
+                    <span className="font-medium">Explore</span>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="my-2" />
+        <SidebarSeparator />
 
         {/* Topics */}
         <SidebarGroup>
@@ -98,7 +106,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="my-2" />
+        <SidebarSeparator />
 
         {/* Communities */}
         <SidebarGroup>
@@ -157,7 +165,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="my-2" />
+        <SidebarSeparator />
 
         {/* Footer Links */}
         <SidebarGroup>
@@ -177,6 +185,20 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <div className="flex items-center justify-center">
+              Build with{" "}
+              <span className="dark:text-primaryDark px-1 text-2xl text-primary">
+                ♡
+              </span>{" "}
+              by&nbsp;<a href="">@billgun</a>
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

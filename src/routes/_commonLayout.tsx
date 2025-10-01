@@ -14,13 +14,11 @@ function RouteComponent() {
         <Header />
         <div className="flex flex-1">
           <AppSidebar />
-          <SidebarInset className="bg-gray-50">
-            <main className="flex-1 overflow-auto bg-background">
-              <div className="mx-auto max-w-5xl px-4 py-4">
-                <Outlet />
-              </div>
-            </main>
-          </SidebarInset>
+          <main className="flex-1 overflow-auto bg-background">
+            <div className="mx-auto max-w-5xl px-4 py-4">
+              <Outlet />
+            </div>
+          </main>
         </div>
       </div>
     </SidebarProvider>

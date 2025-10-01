@@ -17,6 +17,8 @@ import { Route as CommonLayoutRouteImport } from './routes/_commonLayout'
 import { Route as CommonLayoutIndexRouteImport } from './routes/_commonLayout/index'
 import { Route as CommonLayoutTestRouteImport } from './routes/_commonLayout/test'
 import { Route as CommonLayoutAuthedRouteImport } from './routes/_commonLayout/_authed'
+import { Route as CommonLayoutPopularIndexRouteImport } from './routes/_commonLayout/popular/index'
+import { Route as CommonLayoutExploreIndexRouteImport } from './routes/_commonLayout/explore/index'
 import { Route as CommonLayoutAuthedPostsRouteImport } from './routes/_commonLayout/_authed/posts'
 import { Route as CommonLayoutAuthedPostsIndexRouteImport } from './routes/_commonLayout/_authed/posts.index'
 import { Route as CommonLayoutAuthedPostsPostIdRouteImport } from './routes/_commonLayout/_authed/posts.$postId'
@@ -59,6 +61,18 @@ const CommonLayoutAuthedRoute = CommonLayoutAuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => CommonLayoutRoute,
 } as any)
+const CommonLayoutPopularIndexRoute =
+  CommonLayoutPopularIndexRouteImport.update({
+    id: '/popular/',
+    path: '/popular/',
+    getParentRoute: () => CommonLayoutRoute,
+  } as any)
+const CommonLayoutExploreIndexRoute =
+  CommonLayoutExploreIndexRouteImport.update({
+    id: '/explore/',
+    path: '/explore/',
+    getParentRoute: () => CommonLayoutRoute,
+  } as any)
 const CommonLayoutAuthedPostsRoute = CommonLayoutAuthedPostsRouteImport.update({
   id: '/posts',
   path: '/posts',
@@ -85,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/test': typeof CommonLayoutTestRoute
   '/': typeof CommonLayoutIndexRoute
   '/posts': typeof CommonLayoutAuthedPostsRouteWithChildren
+  '/explore': typeof CommonLayoutExploreIndexRoute
+  '/popular': typeof CommonLayoutPopularIndexRoute
   '/posts/$postId': typeof CommonLayoutAuthedPostsPostIdRoute
   '/posts/': typeof CommonLayoutAuthedPostsIndexRoute
 }
@@ -95,6 +111,8 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/test': typeof CommonLayoutTestRoute
   '/': typeof CommonLayoutIndexRoute
+  '/explore': typeof CommonLayoutExploreIndexRoute
+  '/popular': typeof CommonLayoutPopularIndexRoute
   '/posts/$postId': typeof CommonLayoutAuthedPostsPostIdRoute
   '/posts': typeof CommonLayoutAuthedPostsIndexRoute
 }
@@ -109,6 +127,8 @@ export interface FileRoutesById {
   '/_commonLayout/test': typeof CommonLayoutTestRoute
   '/_commonLayout/': typeof CommonLayoutIndexRoute
   '/_commonLayout/_authed/posts': typeof CommonLayoutAuthedPostsRouteWithChildren
+  '/_commonLayout/explore/': typeof CommonLayoutExploreIndexRoute
+  '/_commonLayout/popular/': typeof CommonLayoutPopularIndexRoute
   '/_commonLayout/_authed/posts/$postId': typeof CommonLayoutAuthedPostsPostIdRoute
   '/_commonLayout/_authed/posts/': typeof CommonLayoutAuthedPostsIndexRoute
 }
@@ -122,6 +142,8 @@ export interface FileRouteTypes {
     | '/test'
     | '/'
     | '/posts'
+    | '/explore'
+    | '/popular'
     | '/posts/$postId'
     | '/posts/'
   fileRoutesByTo: FileRoutesByTo
@@ -132,6 +154,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/test'
     | '/'
+    | '/explore'
+    | '/popular'
     | '/posts/$postId'
     | '/posts'
   id:
@@ -145,6 +169,8 @@ export interface FileRouteTypes {
     | '/_commonLayout/test'
     | '/_commonLayout/'
     | '/_commonLayout/_authed/posts'
+    | '/_commonLayout/explore/'
+    | '/_commonLayout/popular/'
     | '/_commonLayout/_authed/posts/$postId'
     | '/_commonLayout/_authed/posts/'
   fileRoutesById: FileRoutesById
@@ -215,6 +241,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommonLayoutAuthedRouteImport
       parentRoute: typeof CommonLayoutRoute
     }
+    '/_commonLayout/popular/': {
+      id: '/_commonLayout/popular/'
+      path: '/popular'
+      fullPath: '/popular'
+      preLoaderRoute: typeof CommonLayoutPopularIndexRouteImport
+      parentRoute: typeof CommonLayoutRoute
+    }
+    '/_commonLayout/explore/': {
+      id: '/_commonLayout/explore/'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof CommonLayoutExploreIndexRouteImport
+      parentRoute: typeof CommonLayoutRoute
+    }
     '/_commonLayout/_authed/posts': {
       id: '/_commonLayout/_authed/posts'
       path: '/posts'
@@ -270,12 +310,16 @@ interface CommonLayoutRouteChildren {
   CommonLayoutAuthedRoute: typeof CommonLayoutAuthedRouteWithChildren
   CommonLayoutTestRoute: typeof CommonLayoutTestRoute
   CommonLayoutIndexRoute: typeof CommonLayoutIndexRoute
+  CommonLayoutExploreIndexRoute: typeof CommonLayoutExploreIndexRoute
+  CommonLayoutPopularIndexRoute: typeof CommonLayoutPopularIndexRoute
 }
 
 const CommonLayoutRouteChildren: CommonLayoutRouteChildren = {
   CommonLayoutAuthedRoute: CommonLayoutAuthedRouteWithChildren,
   CommonLayoutTestRoute: CommonLayoutTestRoute,
   CommonLayoutIndexRoute: CommonLayoutIndexRoute,
+  CommonLayoutExploreIndexRoute: CommonLayoutExploreIndexRoute,
+  CommonLayoutPopularIndexRoute: CommonLayoutPopularIndexRoute,
 }
 
 const CommonLayoutRouteWithChildren = CommonLayoutRoute._addFileChildren(
